@@ -1,186 +1,724 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Image Gallery</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-            background-color: #f8f9fa;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .gallery-container {
-            max-width: 900px;
-            width: 100%;
-            background-color: white;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border-radius: 12px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 40px;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        #image-list {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        .image-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .image-item.loaded {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .image-item img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            border: 1px solid #eee;
-        }
-
-        .image-title {
-            margin-top: 15px;
-            color: #666;
-            font-size: 0.95rem;
-            background: #f1f3f5;
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
-
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        #status-msg {
-            text-align: center;
-            color: #888;
-            margin-top: 20px;
-        }
-    </style>
+    <title>2026년 1월 외래진료일정표</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="gallery-container">
-        <h1>Clinic Schedule Gallery</h1>
-        <div id="loader" class="loader"></div>
-        <div id="image-list"></div>
-        <div id="status-msg"></div>
+    <div class="top-panel">
+        <h1>2026년 1월 외래진료일정표</h1>
+        <p class="meta">최종 업데이트: 2026-01-06</p>
     </div>
 
-    <script>
-        async function loadImages() {
-            const imageList = document.getElementById('image-list');
-            const loader = document.getElementById('loader');
-            const statusMsg = document.getElementById('status-msg');
-            const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    <div class="main-panel">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>진료과</th>
+                        <th>구분</th>
+                        <th>월</th>
+                        <th class="highlight-col">화</th>
+                        <th>수</th>
+                        <th class="highlight-col">목</th>
+                        <th>금</th>
+                    </tr>
+                </thead>
+                <tbody>
+<tr class="am-row" data-dept="소화기내과">
+    <td class="dept-cell" rowspan="2">소화기내과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">김진<br>박수철</td>
+    <td class="doctors highlight-col">박수철<br>김슬지</td>
+    <td class="doctors">박수철<br>김연주</td>
+    <td class="doctors highlight-col">박수철<br>김진<br>김연주</td>
+    <td class="doctors">김진</td>
+</tr>
+<tr class="pm-row" data-dept="소화기내과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">김진<br>신수영(전임의)</td>
+    <td class="doctors highlight-col">김연주</td>
+    <td class="doctors">박수철<br>김슬지</td>
+    <td class="doctors highlight-col">김연주</td>
+    <td class="doctors">김슬지<br>김태수(전임의)</td>
+</tr>
+<tr class="am-row" data-dept="호흡기내과">
+    <td class="dept-cell" rowspan="2">호흡기내과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">김철현<br>김서윤</td>
+    <td class="doctors highlight-col">김철현</td>
+    <td class="doctors">김혜련<br>김서윤</td>
+    <td class="doctors highlight-col">김서윤</td>
+    <td class="doctors">김혜련</td>
+</tr>
+<tr class="pm-row" data-dept="호흡기내과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">김혜련</td>
+    <td class="doctors highlight-col">김철현</td>
+    <td class="doctors">김철현</td>
+    <td class="doctors highlight-col">김혜련</td>
+    <td class="doctors">김서윤</td>
+</tr>
+<tr class="am-row" data-dept="내분비내과">
+    <td class="dept-cell" rowspan="2">내분비내과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">임다은</td>
+    <td class="doctors highlight-col">구윤희</td>
+    <td class="doctors">임다은</td>
+    <td class="doctors highlight-col">임다은(초음파)</td>
+    <td class="doctors">구윤희</td>
+</tr>
+<tr class="pm-row" data-dept="내분비내과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">임다은(초음파)</td>
+    <td class="doctors highlight-col">구윤희</td>
+    <td class="doctors">임다은</td>
+    <td class="doctors highlight-col">구윤희</td>
+    <td class="doctors">구윤희</td>
+</tr>
+<tr class="am-row" data-dept="심장내과">
+    <td class="dept-cell" rowspan="2">심장내과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">문미길</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col">문미길</td>
+    <td class="doctors">문미길</td>
+</tr>
+<tr class="pm-row" data-dept="심장내과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">문미길</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="신장내과">
+    <td class="dept-cell" rowspan="2">신장내과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col">정명아</td>
+    <td class="doctors">정명아</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">정명아</td>
+</tr>
+<tr class="pm-row" data-dept="신장내과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">정명아</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="감염내과">
+    <td class="dept-cell" rowspan="2">감염내과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="pm-row" data-dept="감염내과">
+    <td class="time-cell">오후</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col">서현정</td>
+    <td class="doctors">서현정</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">서현정</td>
+</tr>
+<tr class="am-row" data-dept="류마티스내과">
+    <td class="dept-cell" rowspan="2">류마티스내과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">이은영</td>
+    <td class="doctors highlight-col">이은영</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="pm-row" data-dept="류마티스내과">
+    <td class="time-cell">오후</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">이은영</td>
+    <td class="doctors highlight-col">이은영</td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="혈액종양내과">
+    <td class="dept-cell" rowspan="2">혈액종양내과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">장윤정</td>
+    <td class="doctors highlight-col">이효락<br>장윤정</td>
+    <td class="doctors">나임일<br>강혜진</td>
+    <td class="doctors highlight-col">강혜진<br>이효락</td>
+    <td class="doctors">나임일<br>장윤정</td>
+</tr>
+<tr class="pm-row" data-dept="혈액종양내과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">강혜진<br>장윤정</td>
+    <td class="doctors highlight-col">나임일<br>이효락</td>
+    <td class="doctors">나임일<br>강혜진</td>
+    <td class="doctors highlight-col">이효락<br>장윤정</td>
+    <td class="doctors">이효락</td>
+</tr>
+<tr class="am-row" data-dept="일반내과">
+    <td class="dept-cell" rowspan="2">일반내과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col">일반</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="pm-row" data-dept="일반내과">
+    <td class="time-cell">오후</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">일반</td>
+    <td class="doctors highlight-col">일반</td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="핵의학과">
+    <td class="dept-cell" rowspan="2">핵의학과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">임일한</td>
+    <td class="doctors highlight-col">임일한</td>
+    <td class="doctors">변병현</td>
+    <td class="doctors highlight-col">김병일</td>
+    <td class="doctors">이인기</td>
+</tr>
+<tr class="pm-row" data-dept="핵의학과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">임일한</td>
+    <td class="doctors highlight-col">김병일</td>
+    <td class="doctors">이인기</td>
+    <td class="doctors highlight-col">김병일</td>
+    <td class="doctors">변병현</td>
+</tr>
+<tr class="am-row" data-dept="테라노스틱스 클리닉">
+    <td class="dept-cell" rowspan="2">테라노스틱스 클리닉</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="pm-row" data-dept="테라노스틱스 클리닉">
+    <td class="time-cell">오후</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col">임일한</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="외과">
+    <td class="dept-cell" rowspan="2">외과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">조응호<br>진성호<br>신의섭</td>
+    <td class="doctors highlight-col">김상범<br>문선미</td>
+    <td class="doctors">유항종<br>조응호</td>
+    <td class="doctors highlight-col">김상범<br>진성호<br>신의섭</td>
+    <td class="doctors">유항종<br>문선미</td>
+</tr>
+<tr class="pm-row" data-dept="외과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">조응호<br>진성호<br>신의섭</td>
+    <td class="doctors highlight-col">김상범<br>문선미</td>
+    <td class="doctors">유항종<br>조응호</td>
+    <td class="doctors highlight-col">김상범<br>진성호<br>신의섭</td>
+    <td class="doctors">유항종(신환)<br>문선미</td>
+</tr>
+<tr class="am-row" data-dept="유방암센터">
+    <td class="dept-cell" rowspan="2">유방암센터</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">김현아<br>한이레</td>
+    <td class="doctors highlight-col">성민기<br>박찬섭</td>
+    <td class="doctors">김현아</td>
+    <td class="doctors highlight-col">성민기</td>
+    <td class="doctors">박찬섭<br>한이레</td>
+</tr>
+<tr class="pm-row" data-dept="유방암센터">
+    <td class="time-cell">오후</td>
+    <td class="doctors">김현아<br>한이레</td>
+    <td class="doctors highlight-col">성민기<br>박찬섭</td>
+    <td class="doctors">김현아</td>
+    <td class="doctors highlight-col">성민기</td>
+    <td class="doctors">박찬섭</td>
+</tr>
+<tr class="am-row" data-dept="산부인과">
+    <td class="dept-cell" rowspan="2">산부인과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">유상영<br>강지식</td>
+    <td class="doctors highlight-col">김법종<br>정희정</td>
+    <td class="doctors">유상영<br>강지식</td>
+    <td class="doctors highlight-col">김법종</td>
+    <td class="doctors">정희정</td>
+</tr>
+<tr class="pm-row" data-dept="산부인과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">유상영<br>강지식</td>
+    <td class="doctors highlight-col">김법종<br>정희정</td>
+    <td class="doctors">유상영<br>강지식</td>
+    <td class="doctors highlight-col">김법종</td>
+    <td class="doctors">정희정</td>
+</tr>
+<tr class="am-row" data-dept="소아청소년과">
+    <td class="dept-cell" rowspan="2">소아청소년과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">김건하(영유아검진</td>
+    <td class="doctors highlight-col">김동호</td>
+    <td class="doctors">임중섭</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="pm-row" data-dept="소아청소년과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">김동호</td>
+    <td class="doctors highlight-col">임중섭<br>김동호</td>
+    <td class="doctors">임중섭<br>김건하</td>
+    <td class="doctors highlight-col">임중섭<br>김건하</td>
+    <td class="doctors">임중섭</td>
+</tr>
+<tr class="am-row" data-dept="수면클리닉">
+    <td class="dept-cell" rowspan="2">수면클리닉</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col">김건하</td>
+    <td class="doctors">김건하</td>
+</tr>
+<tr class="pm-row" data-dept="수면클리닉">
+    <td class="time-cell">오후</td>
+    <td class="doctors">김건하</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="비뇨의학과">
+    <td class="dept-cell" rowspan="2">비뇨의학과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">조문기</td>
+    <td class="doctors highlight-col">박종욱</td>
+    <td class="doctors">조문기<br>송강현</td>
+    <td class="doctors highlight-col">송강현</td>
+    <td class="doctors">박종욱</td>
+</tr>
+<tr class="pm-row" data-dept="비뇨의학과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">조문기<br>송강현</td>
+    <td class="doctors highlight-col">박종욱</td>
+    <td class="doctors">조문기</td>
+    <td class="doctors highlight-col">송강현</td>
+    <td class="doctors">박종욱</td>
+</tr>
+<tr class="am-row" data-dept="이비인후과">
+    <td class="dept-cell" rowspan="2">이비인후과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">이병철</td>
+    <td class="doctors highlight-col">이명철</td>
+    <td class="doctors">최익준<br>이병철</td>
+    <td class="doctors highlight-col">이명철<br>안정민</td>
+    <td class="doctors">최익준</td>
+</tr>
+<tr class="pm-row" data-dept="이비인후과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">이병철<br>안정민</td>
+    <td class="doctors highlight-col">안정민</td>
+    <td class="doctors">최익준</td>
+    <td class="doctors highlight-col">이명철</td>
+    <td class="doctors">안정민</td>
+</tr>
+<tr class="am-row" data-dept="정형외과">
+    <td class="dept-cell" rowspan="2">정형외과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">조완형<br>송원석</td>
+    <td class="doctors highlight-col">공창배<br>조상현</td>
+    <td class="doctors">송원석</td>
+    <td class="doctors highlight-col">조완형<br>공창배</td>
+    <td class="doctors">조상현</td>
+</tr>
+<tr class="pm-row" data-dept="정형외과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">공창배<br>일반</td>
+    <td class="doctors highlight-col">공창배<br>조상현</td>
+    <td class="doctors">송원석<br>일반</td>
+    <td class="doctors highlight-col">조완형<br>공창배</td>
+    <td class="doctors">조상현<br>일반</td>
+</tr>
+<tr class="am-row" data-dept="신경외과">
+    <td class="dept-cell" rowspan="2">신경외과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">장웅규</td>
+    <td class="doctors highlight-col">윤상민</td>
+    <td class="doctors">윤상민</td>
+    <td class="doctors highlight-col">장웅규</td>
+    <td class="doctors">윤상민</td>
+</tr>
+<tr class="pm-row" data-dept="신경외과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">장웅규</td>
+    <td class="doctors highlight-col">윤상민</td>
+    <td class="doctors">윤상민</td>
+    <td class="doctors highlight-col">장웅규</td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="신경과">
+    <td class="dept-cell" rowspan="2">신경과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">박수연</td>
+    <td class="doctors highlight-col">하정호</td>
+    <td class="doctors">박수연</td>
+    <td class="doctors highlight-col">하정호</td>
+    <td class="doctors">하정호</td>
+</tr>
+<tr class="pm-row" data-dept="신경과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">하정호</td>
+    <td class="doctors highlight-col">하정호</td>
+    <td class="doctors">박수연</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">박수연</td>
+</tr>
+<tr class="am-row" data-dept="뇌혈관센터">
+    <td class="dept-cell" rowspan="2">뇌혈관센터</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">조현준</td>
+    <td class="doctors highlight-col">조현준</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">유진혁</td>
+</tr>
+<tr class="pm-row" data-dept="뇌혈관센터">
+    <td class="time-cell">오후</td>
+    <td class="doctors">조현준</td>
+    <td class="doctors highlight-col">유진혁</td>
+    <td class="doctors">유진혁</td>
+    <td class="doctors highlight-col">조현준</td>
+    <td class="doctors">유진혁</td>
+</tr>
+<tr class="am-row" data-dept="심장혈관흉부외과">
+    <td class="dept-cell" rowspan="2">심장혈관흉부외과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">이해원</td>
+    <td class="doctors highlight-col">권예리</td>
+    <td class="doctors">강도균</td>
+    <td class="doctors highlight-col">이해원</td>
+    <td class="doctors">권예리</td>
+</tr>
+<tr class="pm-row" data-dept="심장혈관흉부외과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">강도균</td>
+    <td class="doctors highlight-col">권예리</td>
+    <td class="doctors">강도균</td>
+    <td class="doctors highlight-col">이해원</td>
+    <td class="doctors">이해원</td>
+</tr>
+<tr class="am-row" data-dept="기흉센터">
+    <td class="dept-cell" rowspan="2">기흉센터</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">이해원</td>
+    <td class="doctors highlight-col">권예리</td>
+    <td class="doctors">강도균</td>
+    <td class="doctors highlight-col">이해원</td>
+    <td class="doctors">권예리</td>
+</tr>
+<tr class="pm-row" data-dept="기흉센터">
+    <td class="time-cell">오후</td>
+    <td class="doctors">강도균</td>
+    <td class="doctors highlight-col">권예리</td>
+    <td class="doctors">강도균</td>
+    <td class="doctors highlight-col">이해원</td>
+    <td class="doctors">권예리</td>
+</tr>
+<tr class="am-row" data-dept="안과">
+    <td class="dept-cell" rowspan="2">안과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="pm-row" data-dept="안과">
+    <td class="time-cell">오후</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="정신건강의학과">
+    <td class="dept-cell" rowspan="2">정신건강의학과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">주소연</td>
+    <td class="doctors highlight-col">주소연</td>
+    <td class="doctors">조성진</td>
+    <td class="doctors highlight-col">주소연</td>
+    <td class="doctors">조성진</td>
+</tr>
+<tr class="pm-row" data-dept="정신건강의학과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">조성진</td>
+    <td class="doctors highlight-col">조성진</td>
+    <td class="doctors">주소연</td>
+    <td class="doctors highlight-col">조성진</td>
+    <td class="doctors">주소연</td>
+</tr>
+<tr class="am-row" data-dept="통증클리닉">
+    <td class="dept-cell" rowspan="2">통증클리닉</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">이청</td>
+    <td class="doctors highlight-col">이청</td>
+    <td class="doctors">이청</td>
+    <td class="doctors highlight-col">이청</td>
+    <td class="doctors">이청</td>
+</tr>
+<tr class="pm-row" data-dept="통증클리닉">
+    <td class="time-cell">오후</td>
+    <td class="doctors">이청</td>
+    <td class="doctors highlight-col">민두재</td>
+    <td class="doctors">이청</td>
+    <td class="doctors highlight-col">민두재</td>
+    <td class="doctors">이청</td>
+</tr>
+<tr class="am-row" data-dept="유전암상담클리닉">
+    <td class="dept-cell" rowspan="2">유전암상담클리닉</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="pm-row" data-dept="유전암상담클리닉">
+    <td class="time-cell">오후</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">이진경</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="치과">
+    <td class="dept-cell" rowspan="2">치과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">이민기</td>
+    <td class="doctors highlight-col">이민기</td>
+    <td class="doctors">이민기</td>
+    <td class="doctors highlight-col">이민기</td>
+    <td class="doctors">이민기</td>
+</tr>
+<tr class="pm-row" data-dept="치과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">이민기</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">이민기</td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">이민기</td>
+</tr>
+<tr class="am-row" data-dept="피부과">
+    <td class="dept-cell" rowspan="2">피부과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">임경진</td>
+    <td class="doctors highlight-col">임경진</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col">임경진</td>
+    <td class="doctors">임경진</td>
+</tr>
+<tr class="pm-row" data-dept="피부과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">임경진</td>
+    <td class="doctors highlight-col">임경진</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">임경진</td>
+</tr>
+<tr class="am-row" data-dept="가정의학과">
+    <td class="dept-cell" rowspan="2">가정의학과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">고영진</td>
+    <td class="doctors highlight-col">김경진</td>
+    <td class="doctors">김경진</td>
+    <td class="doctors highlight-col">김경진<br>고영진</td>
+    <td class="doctors">고영진</td>
+</tr>
+<tr class="pm-row" data-dept="가정의학과">
+    <td class="time-cell">오후</td>
+    <td class="doctors"></td>
+    <td class="doctors highlight-col"></td>
+    <td class="doctors">김경진</td>
+    <td class="doctors highlight-col">고영진</td>
+    <td class="doctors"></td>
+</tr>
+<tr class="am-row" data-dept="방사선종양학과">
+    <td class="dept-cell" rowspan="2">방사선종양학과</td>
+    <td class="time-cell">오전</td>
+    <td class="doctors">백은경</td>
+    <td class="doctors highlight-col">장원일</td>
+    <td class="doctors">김미숙<br>장원일</td>
+    <td class="doctors highlight-col">유형준<br>백은경</td>
+    <td class="doctors">유형준</td>
+</tr>
+<tr class="pm-row" data-dept="방사선종양학과">
+    <td class="time-cell">오후</td>
+    <td class="doctors">김미숙</td>
+    <td class="doctors highlight-col">유형준</td>
+    <td class="doctors">김미숙<br>장원일<br>백은경</td>
+    <td class="doctors highlight-col">김미숙<br>유형준<br>백은경</td>
+    <td class="doctors">장원일</td>
+</tr>
 
-            try {
-                // Determine if we are on GitHub Pages
-                const hostname = window.location.hostname;
-                const pathname = window.location.pathname;
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-                let files = [];
+    <div class="bottom-panel">
+        <div class="filter-title">
+            <span>진료과 필터</span>
+            <div>
+                <button id="btn-select-all" class="btn-all">전체 선택</button>
+                <button id="btn-select-none" class="btn-all">전체 해제</button>
+            </div>
+        </div>
+        <div class="filter-container">
 
-                if (hostname.includes('github.io')) {
-                    // GitHub Pages: Use GitHub API
-                    const parts = hostname.split('.');
-                    const owner = parts[0];
-                    const repo = pathname.split('/')[1];
-                    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/`;
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="소화기내과" checked>
+                    소화기내과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="호흡기내과" checked>
+                    호흡기내과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="내분비내과" checked>
+                    내분비내과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="심장내과" checked>
+                    심장내과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="신장내과" checked>
+                    신장내과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="감염내과" checked>
+                    감염내과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="류마티스내과" checked>
+                    류마티스내과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="혈액종양내과" checked>
+                    혈액종양내과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="일반내과" checked>
+                    일반내과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="핵의학과" checked>
+                    핵의학과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="테라노스틱스 클리닉" checked>
+                    테라노스틱스 클리닉
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="외과" checked>
+                    외과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="유방암센터" checked>
+                    유방암센터
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="산부인과" checked>
+                    산부인과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="소아청소년과" checked>
+                    소아청소년과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="수면클리닉" checked>
+                    수면클리닉
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="비뇨의학과" checked>
+                    비뇨의학과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="이비인후과" checked>
+                    이비인후과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="정형외과" checked>
+                    정형외과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="신경외과" checked>
+                    신경외과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="신경과" checked>
+                    신경과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="뇌혈관센터" checked>
+                    뇌혈관센터
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="심장혈관흉부외과" checked>
+                    심장혈관흉부외과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="기흉센터" checked>
+                    기흉센터
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="안과" checked>
+                    안과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="정신건강의학과" checked>
+                    정신건강의학과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="통증클리닉" checked>
+                    통증클리닉
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="유전암상담클리닉" checked>
+                    유전암상담클리닉
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="치과" checked>
+                    치과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="피부과" checked>
+                    피부과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="가정의학과" checked>
+                    가정의학과
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" class="dept-checkbox" value="방사선종양학과" checked>
+                    방사선종양학과
+                </label>
+        </div>
+    </div>
 
-                    const response = await fetch(apiUrl);
-                    if (!response.ok) throw new Error('Failed to fetch file list from GitHub');
-                    files = await response.json();
-
-                    // Filter images and format
-                    files = files
-                        .filter(file => file.type === 'file' && imageExtensions.some(ext => file.name.toLowerCase().endsWith(ext)))
-                        .map(file => ({ name: file.name, url: file.download_url }));
-                } else {
-                    // Local testing or other: Hardcoded or simple discovery if server allows directory listing
-                    // For now, since we can't do local directory listing via standard JS without a server,
-                    // we'll show a message or try to fetch a known file.
-                    statusMsg.textContent = "Running locally. Auto-discovery works best on GitHub Pages. Showing current known files...";
-                    files = [
-                        { name: '2026-01-ClinicSchedule.jpg', url: '2026-01-ClinicSchedule.jpg' },
-                        { name: '2026-02-ClinicSchedule.png', url: '2026-02-ClinicSchedule.png' }
-                    ];
-                }
-
-                loader.style.display = 'none';
-
-                if (files.length === 0) {
-                    statusMsg.textContent = "No images found in the directory.";
-                    return;
-                }
-
-                files.sort((a, b) => b.name.localeCompare(a.name)); // Sort descending (newest first usually)
-
-                files.forEach((file, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'image-item';
-                    item.innerHTML = `
-                        <img src="${file.url}" alt="${file.name}" loading="lazy">
-                        <div class="image-title">${file.name}</div>
-                    `;
-                    imageList.appendChild(item);
-
-                    // Staggered fade-in effect
-                    setTimeout(() => {
-                        item.classList.add('loaded');
-                    }, index * 100);
-                });
-
-            } catch (error) {
-                console.error(error);
-                loader.style.display = 'none';
-                statusMsg.textContent = "Error loading images. Please ensure the repository is public or try reloading.";
-                statusMsg.style.color = "#e74c3c";
-            }
-        }
-
-        window.onload = loadImages;
-    </script>
+    <script src="script.js"></script>
 </body>
-
 </html>
