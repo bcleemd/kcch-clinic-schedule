@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>외래진료일정표</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-panel">
+        <h1 id="page-title">외래진료일정표</h1>
+        <p class="meta" id="page-meta">최종 업데이트: -</p>
+    </div>
+
+    <div class="main-panel">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>진료과</th>
+                        <th>구분</th>
+                        <th>월</th>
+                        <th class="highlight-col">화</th>
+                        <th>수</th>
+                        <th class="highlight-col">목</th>
+                        <th>금</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-body">
+                </tbody>
+            </table>
+        </div>
+        <p id="status-message" class="status-message"></p>
+    </div>
+
+    <div class="bottom-panel">
+        <div class="filter-title">
+            <span>진료과 필터</span>
+            <div>
+                <button id="btn-select-all" class="btn-all">전체 선택</button>
+                <button id="btn-select-none" class="btn-all">전체 해제</button>
+            </div>
+        </div>
+        <div class="filter-container" id="filter-container">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

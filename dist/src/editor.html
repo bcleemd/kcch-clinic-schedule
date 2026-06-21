@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>외래진료일정표 WYSIWYG 편집기</title>
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script type="module" crossorigin src="/assets/main-xMTtQTGO.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-FpKWG1Wx.css">
+</head>
+<body>
+    <!-- Premium Backdrop Grid Background -->
+    <div class="bg-grid"></div>
+
+    <!-- Header Panel (Glassmorphism) -->
+    <header class="top-panel glass">
+        <div class="header-left">
+            <i class="fa-solid fa-calendar-check logo-icon"></i>
+            <div class="title-group">
+                <input type="text" id="schedule-title" class="editable-title" value="외래진료일정표" placeholder="일정표 제목 입력">
+                <div class="meta-inputs">
+                    <span class="meta-label">대상 연월:</span>
+                    <input type="number" id="schedule-year" class="meta-num" value="2026" min="2020" max="2100">
+                    <span class="meta-sep">년</span>
+                    <input type="number" id="schedule-month" class="meta-num" value="1" min="1" max="12">
+                    <span class="meta-sep">월</span>
+                    <span class="meta-label date-label">최종 업데이트:</span>
+                    <input type="date" id="schedule-updated" class="meta-date" value="2026-01-06">
+                </div>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <!-- File Selector & Loader -->
+            <div class="file-control">
+                <select id="server-files-select" class="glass-select">
+                    <option value="">-- 로컬 파일 선택 --</option>
+                </select>
+                <button id="btn-load-server-file" class="btn-secondary" title="선택한 JSON 파일 불러오기">
+                    <i class="fa-solid fa-folder-open"></i> 불러오기
+                </button>
+            </div>
+
+            <!-- Pipeline Action Buttons -->
+            <div class="action-group">
+                <button id="btn-pipeline" class="btn-primary btn-glow">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> 배포 파이프라인 실행
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="workspace">
+        <!-- Sidebar: Doctor Pool & Controls (Glassmorphism) -->
+        <aside class="sidebar glass">
+            <div class="sidebar-section">
+                <h2><i class="fa-solid fa-user-doctor"></i> 의사 풀 (Doctor Pool)</h2>
+                <p class="section-desc">의사 카드를 시간대 셀로 드래그하세요. (드래그 시 이동, Ctrl/Cmd 누른 채 드래그 시 복사)</p>
+                
+                <div class="add-doctor-box">
+                    <input type="text" id="new-doctor-name" placeholder="의사 이름 (예: 김의사)">
+                    <button id="btn-add-doctor" class="btn-icon" title="의사 추가">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+
+                <!-- Doctor Cards Container -->
+                <div id="doctor-pool" class="doctor-pool-container">
+                    <!-- Cards will be dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Trash Zone Dropzone -->
+            <div id="trash-zone" class="trash-zone">
+                <i class="fa-regular fa-trash-can trash-icon"></i>
+                <span>이곳에 드랍하여 제거</span>
+            </div>
+        </aside>
+
+        <!-- Main Schedule Grid Editor -->
+        <section class="grid-container glass">
+            <div class="table-wrapper">
+                <table id="editor-table">
+                    <thead>
+                        <tr>
+                            <th class="dept-col">진료과</th>
+                            <th class="time-col">구분</th>
+                            <th>월요일</th>
+                            <th>화요일</th>
+                            <th>수요일</th>
+                            <th>목요일</th>
+                            <th>금요일</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Rows will be dynamically generated here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pipeline Progress Modal (Glassmorphic Dialog) -->
+    <div id="pipeline-modal" class="modal-overlay hidden">
+        <div class="modal-content glass">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-rotate-left spinner"></i> 배포 파이프라인 진행 상태</h3>
+                <button id="btn-close-modal" class="btn-close" disabled>&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="pipeline-steps">
+                    <div id="step-save" class="step pending">
+                        <div class="step-status-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                        <div class="step-details">
+                            <h4>1. JSON 데이터 저장</h4>
+                            <p class="step-desc">현재 스케줄 데이터를 JSON 파일로 서버에 씁니다.</p>
+                        </div>
+                    </div>
+                    <div id="step-build" class="step pending">
+                        <div class="step-status-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                        <div class="step-details">
+                            <h4>2. HTML 템플릿 빌드</h4>
+                            <p class="step-desc">파이썬 컴파일러를 가동해 index.html을 빌드합니다.</p>
+                        </div>
+                    </div>
+                    <div id="step-push" class="step pending">
+                        <div class="step-status-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                        <div class="step-details">
+                            <h4>3. GitHub 원격 저장소 Push</h4>
+                            <p class="step-desc">변경 파일을 스테이징, 커밋하고 GitHub로 푸시합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="console-log-box">
+                    <div class="console-header">실행 로그 콘솔</div>
+                    <pre id="console-output">준비됨...</pre>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-modal-action" class="btn-primary" disabled>완료</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Notification Toast -->
+    <div id="toast-container" class="toast-container"></div>
+
+</body>
+</html>

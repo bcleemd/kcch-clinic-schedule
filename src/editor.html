@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>외래진료일정표 WYSIWYG 편집기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="editor-style.css">
+</head>
+<body>
+    <!-- Premium Backdrop Grid Background -->
+    <div class="bg-grid"></div>
+
+    <!-- Header Panel (Glassmorphism) -->
+    <header class="top-panel glass">
+        <div class="header-left">
+            <i class="fa-solid fa-calendar-check logo-icon"></i>
+            <div class="title-group">
+                <input type="text" id="schedule-title" class="editable-title" value="외래진료일정표" placeholder="일정표 제목 입력">
+                <div class="meta-inputs">
+                    <span class="meta-label">대상 연월:</span>
+                    <input type="number" id="schedule-year" class="meta-num" value="2026" min="2020" max="2100">
+                    <span class="meta-sep">년</span>
+                    <input type="number" id="schedule-month" class="meta-num" value="1" min="1" max="12">
+                    <span class="meta-sep">월</span>
+                    <span class="meta-label date-label">최종 업데이트:</span>
+                    <input type="date" id="schedule-updated" class="meta-date" value="2026-01-06">
+                </div>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <!-- Folder Open -->
+            <button id="btn-open-folder" class="btn-accent">
+                <i class="fa-solid fa-folder-open"></i> 폴더 열기
+            </button>
+            <span id="folder-status" class="folder-status"><i class="fa-solid fa-circle-xmark"></i> 미연결</span>
+
+            <div class="header-divider"></div>
+
+            <!-- File Selector -->
+            <div class="file-control">
+                <select id="file-select" class="glass-select" disabled>
+                    <option value="">-- 파일 선택 --</option>
+                </select>
+                <button id="btn-load-file" class="btn-secondary" disabled title="선택한 JSON 파일 불러오기">
+                    <i class="fa-solid fa-download"></i>
+                </button>
+            </div>
+
+            <div class="header-divider"></div>
+
+            <!-- Action Buttons -->
+            <div class="action-group">
+                <button id="btn-save-json" class="btn-secondary" disabled title="JSON 파일로 저장">
+                    <i class="fa-solid fa-floppy-disk"></i> JSON 저장
+                </button>
+                <button id="btn-build-html" class="btn-primary btn-glow" disabled title="GitHub에 clinic-schedule.json 배포">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Deploy to GitHub
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="workspace">
+        <!-- Sidebar: Doctor Pool & Controls (Glassmorphism) -->
+        <aside class="sidebar glass">
+            <div class="sidebar-section">
+                <h2><i class="fa-solid fa-user-doctor"></i> 의사 풀 (Doctor Pool)</h2>
+                <p class="section-desc">의사 카드를 시간대 셀로 드래그하세요. (드래그 시 이동, Ctrl/Cmd 누른 채 드래그 시 복사)</p>
+                
+                <div class="add-doctor-box">
+                    <input type="text" id="new-doctor-name" placeholder="의사 이름 (예: 김의사)">
+                    <button id="btn-add-doctor" class="btn-icon" title="의사 추가">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+
+                <!-- Doctor Cards Container -->
+                <div id="doctor-pool" class="doctor-pool-container">
+                    <!-- Cards will be dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Trash Zone Dropzone -->
+            <div id="trash-zone" class="trash-zone">
+                <i class="fa-regular fa-trash-can trash-icon"></i>
+                <span>이곳에 드랍하여 제거</span>
+            </div>
+        </aside>
+
+        <!-- Main Schedule Grid Editor -->
+        <section class="grid-container glass">
+            <div class="table-wrapper">
+                <table id="editor-table">
+                    <thead>
+                        <tr>
+                            <th class="dept-col">진료과</th>
+                            <th class="time-col">구분</th>
+                            <th>월요일</th>
+                            <th>화요일</th>
+                            <th>수요일</th>
+                            <th>목요일</th>
+                            <th>금요일</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Rows will be dynamically generated here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- UI Notification Toast -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="editor-script.js"></script>
+</body>
+</html>
